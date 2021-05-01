@@ -5,15 +5,22 @@ import { FormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
 import { CharactersResolver } from "./resolvers/characters-resolver.service";
-import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
 
 const routes: Routes = [
   {
     path: "",
     component: AppComponent,
-    resolve: {
-      characters: CharactersResolver
-    }
+    children: [
+      {
+        component: HomeComponent,
+        path: "",
+        resolve: {
+          characters: CharactersResolver
+        }
+      }
+    ]
   }
 ];
 
@@ -25,7 +32,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   providers: [CharactersResolver],
   bootstrap: [AppComponent]
 })
