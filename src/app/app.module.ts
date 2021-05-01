@@ -6,7 +6,6 @@ import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
 import { CharactersResolver } from "./resolvers/characters-resolver.service";
 import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
-import { CommonModule } from "@angular/common";
 
 const routes: Routes = [
   {
@@ -27,7 +26,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   declarations: [AppComponent],
-  providers: [CharactersResolver, ActivatedRoute],
+  providers: [CharactersResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
