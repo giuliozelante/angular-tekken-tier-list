@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, VERSION } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { Component } from '@angular/core';
 import type { Character } from './models/character.model';
 import { environment } from './environment/environment'
-import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -12,15 +10,8 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent  {
   public static readonly SERVICES_ROOT = `${environment.apiUrl}/`;
-  result$: Observable<Character[]>
-  constructor(private http: HttpClient) {
-    this.result$ = forkJoin(
-      [
-        this.http.get<Character[]>(`${AppComponent.SERVICES_ROOT}characters1`),
-        this.http.get<Character[]>(`${AppComponent.SERVICES_ROOT}characters2`)
-      ]
-    ).pipe(
-        map(([characters1, characters2]) => ([...characters1, ...characters2]))
-      )
+  characters: Character[]
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe(data => this.characters = data.characters)
   }
 }

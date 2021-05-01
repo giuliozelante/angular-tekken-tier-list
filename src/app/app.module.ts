@@ -4,11 +4,30 @@ import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
+import { CharactersResolver } from "./resolvers/characters-resolver.service";
+import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
+import { CommonModule } from "@angular/common";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: AppComponent,
+    resolve: {
+      characters: CharactersResolver
+    }
+  }
+];
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [
+    RouterModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes)
+  ],
   declarations: [AppComponent],
-  providers: [CharactersResolver]
+  providers: [CharactersResolver, ActivatedRoute],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
